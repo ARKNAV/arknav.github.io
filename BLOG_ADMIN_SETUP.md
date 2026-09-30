@@ -1,6 +1,6 @@
 # Activate the on-site blog editor
 
-The `/admin/` editor is published at `https://arknav.github.io/admin/`. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. Both GitHub OAuth credentials are installed in Worker secrets, and the login service now redirects to GitHub successfully. Actual account login and publishing still need a final check.
+The `/admin/` editor is published at `https://arknav.github.io/admin/`. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. Both GitHub OAuth credentials are installed in Worker secrets, and the login service now redirects to GitHub successfully. The user successfully signed in and published a post; GitHub Pages deployed it and the public article returned HTTP 200.
 
 The public website stays on GitHub Pages. A separate Cloudflare Worker handles the GitHub OAuth exchange. It allows only `ARKNAV`, checks write access to `ARKNAV/arknav.github.io`, and uses state cookies and PKCE to verify login. The client secret stays in Worker secrets. The editor saves Markdown and images directly to `main`, which triggers the existing Pages workflow.
 
@@ -78,7 +78,7 @@ The editor uses Decap CMS 3.16.3 with a pinned script and integrity check. It us
 - An article saved as a draft is intentionally excluded from the blog. A failed Pages workflow must be fixed before any new save becomes public.
 - Branch protection can prevent direct saves to `main`. This setup assumes the current direct publishing workflow; an approval workflow would need a separate editorial-workflow configuration.
 
-The deployed authorization endpoint returns HTTP 302 to GitHub with the exact callback URL and S256 PKCE. The live editor displays **Login with GitHub**. End-to-end account login and publishing have not yet been verified; GitHub browser access is currently blocked by a saved site permission.
+The deployed authorization endpoint returns HTTP 302 to GitHub with the exact callback URL and S256 PKCE. The live editor displays **Login with GitHub**. The user successfully signed in and saved a post through the editor (commit `efca835`). GitHub Pages run `36658465032` succeeded, the listing includes the post, and `/blog/draft/` returns HTTP 200. This verifies the real publishing flow despite the agent being unable to inspect GitHub browser pages directly.
 
 ## Official references
 

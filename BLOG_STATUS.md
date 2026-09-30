@@ -29,13 +29,13 @@ Updated September 29, 2026. Target repository: `ARKNAV/arknav.github.io`.
 - After adding the editor: production build and TypeScript checks passed; all five admin assets are included in the static export.
 - Four login-service tests passed, covering configuration failures, state verification, PKCE, authorized login, fixed-origin popup messaging, denied accounts/write access, and GitHub API failures. No real credentials are used by these tests.
 - Worker deployment dry-run passed. Editor configuration, setup messages, CMS initialization, pinned-script integrity, and exported author links were checked. Local `/admin/index.html` returned HTTP 200.
-- Live editor browser verification reached the **Login with GitHub** button. GitHub browser access remains blocked by a saved site permission, so an actual account login and publishing save remain unverified.
+- Live editor browser verification reached the **Login with GitHub** button. The user then signed in and published through the editor; CMS commit `efca835` created `content/posts/draft.md` with `draft: false`. GitHub Pages run `36658465032` succeeded, the listing includes the post, and `/blog/draft/` returns HTTP 200. The agent could not inspect GitHub directly because of a saved browser permission, but the resulting commit and live page verify the publishing flow.
 - Both OAuth credentials were securely uploaded to Cloudflare Worker secrets from the ignored local file. The live `/auth?provider=github` endpoint returns HTTP 302 to GitHub, with the exact callback URL, `public_repo` scope, and S256 PKCE.
 
 ## Remaining user actions
 
 1. Create your own writing; the example posts remain drafts.
-2. Visit `https://arknav.github.io/admin/`, click **Login with GitHub**, and authorize the app as `ARKNAV`. Confirm the editor opens and save your first post. The OAuth app credentials are installed and the authorization redirect is working; actual login and publishing remain unverified.
+2. Replace or edit the published test post titled `draft` when ready. Login, saving to GitHub, automatic deployment, and public article delivery have been verified.
 
 ## Deployment progress
 
