@@ -1,6 +1,6 @@
 # Activate the on-site blog editor
 
-The `/admin/` editor is implemented locally. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. GitHub OAuth credentials and website publication are still required to activate login.
+The `/admin/` editor is published at `https://arknav.github.io/admin/`. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. GitHub OAuth credentials are still required to activate login.
 
 The public website stays on GitHub Pages. A separate Cloudflare Worker handles the GitHub OAuth exchange. It allows only `ARKNAV`, checks write access to `ARKNAV/arknav.github.io`, and uses state cookies and PKCE to verify login. The client secret stays in Worker secrets. The editor saves Markdown and images directly to `main`, which triggers the existing Pages workflow.
 
@@ -52,6 +52,8 @@ In `public/admin/settings.json`, set the Worker origin (no path):
 Keep `SITE_ORIGIN` in `services/blog-auth/wrangler.jsonc` aligned with the website's exact origin. If you later add a custom domain, update it and the URLs in `public/admin/config.yml`, then redeploy the Worker. The login handoff deliberately rejects other origins, including localhost.
 
 Commit and push the website changes to `main` when ready. The included GitHub Pages workflow publishes `/admin/`. These instructions do not require moving the website to another hosting service.
+
+The initial website publication is already complete. You only need to configure the OAuth credentials to activate login; no new website build is required for Worker secret changes.
 
 ## Write and publish
 

@@ -41,7 +41,8 @@ Updated September 29, 2026. Target repository: `ARKNAV/arknav.github.io`.
 - Registered the Cloudflare account's `arknav.workers.dev` subdomain and deployed `arknav-blog-auth` successfully.
 - GitHub OAuth callback URL: `https://arknav-blog-auth.arknav.workers.dev/callback`.
 - Chrome computer access was not approved; GitHub's browser-only OAuth app registration needs user interaction.
-- The website is prepared for publication through the existing `main` branch Pages workflow. Existing Git credentials passed a push dry-run; GitHub CLI sign-in is still pending.
+- The website source was committed as `ca4bd4373d00f25b192f4a74d184345476888b57` and pushed to `main` using the existing Git credentials. GitHub Pages run `36656305423` completed successfully.
+- The blog and editor are published at `https://arknav.github.io/blog/` and `https://arknav.github.io/admin/`. Login remains inactive until the GitHub OAuth app credentials are supplied.
 - A private ignored `.env.blog-auth` file is available locally for the OAuth credentials. Neither credential has been provided or uploaded.
 
 ## Known framework limitation outside the current deployment
