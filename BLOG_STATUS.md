@@ -1,0 +1,57 @@
+# Blog implementation status
+
+Updated September 29, 2026. Target repository: `ARKNAV/arknav.github.io`.
+
+## Completed
+
+- Separate `/blog/` listing and `/blog/<slug>/` article pages, with a Blog link in the homepage navigation.
+- Shared navigation and footer; category/date/reading-time metadata, featured latest post, article cards, tags, and adjacent-post links.
+- Responsive styling that extends the site's existing serif headings, navy/blue palette, and bordered surfaces. Design references: Ghost Casper and Edition (source templates reviewed; no code/assets copied).
+- GitHub authoring through repository Markdown files. Commits to `main` trigger the existing Pages workflow.
+- Added a separate `/admin/` Decap CMS editor, with matching Markdown fields, image uploads into `public/blog`, drafts, and direct saves to `main`. Blog author links now open this editor.
+- Added a separate Cloudflare Worker for GitHub OAuth, with state verification, PKCE, secure cookies, fixed-origin popup messaging, owner restriction, and repository write-access checks. No client secret is in the static website.
+- Added `BLOG_ADMIN_SETUP.md` with exact account setup and publishing instructions. The editor shows a setup message until its login service URL is configured.
+- Standard Markdown and YAML parsing using `marked` and `gray-matter`; rendered HTML is sanitized with `sanitize-html`.
+- Required title/date validation, draft exclusion, deterministic newest-first sorting, and automatic reading time.
+- Fixed template so copied frontmatter starts at the beginning of the file.
+- The two generated posts are explicitly labeled example content and are now marked `draft: true`, so they will not appear on the public blog.
+- README includes the authoring steps, metadata fields, supported Markdown, and design references.
+- `scripts/prepare-pages.mjs` runs automatically after `npm run build` and creates directory entrypoints while retaining Vinext's flat exports. This avoids a Vinext prerender failure with `trailingSlash: true`.
+
+## Verification
+
+- Production build succeeded for the current root-domain site; both articles and the listing were exported.
+- TypeScript check passed.
+- Exported page existence and internal link targets checked.
+- Markdown headings, emphasis, tables, fenced code, unsafe links, and HTML sanitization checked.
+- Empty-blog state, draft/template exclusion, quoted YAML titles, dates, sorting, and invalid-date failure checked.
+- Local `/blog/` request returned HTTP 200.
+- After adding the editor: production build and TypeScript checks passed; all five admin assets are included in the static export.
+- Four login-service tests passed, covering configuration failures, state verification, PKCE, authorized login, fixed-origin popup messaging, denied accounts/write access, and GitHub API failures. No real credentials are used by these tests.
+- Worker deployment dry-run passed. Editor configuration, setup messages, CMS initialization, pinned-script integrity, and exported author links were checked. Local `/admin/index.html` returned HTTP 200.
+- Browser opening was unavailable; no screenshot or interactive browser verification was performed.
+
+## Remaining user actions
+
+1. Create your own writing; the example posts remain drafts.
+2. Create the GitHub OAuth app and set its two Worker secrets. Follow `BLOG_ADMIN_SETUP.md`. Cloudflare login succeeded, the Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev`, and `public/admin/settings.json` now points to it. Live editor login and publishing remain unverified.
+
+## Deployment progress
+
+- Registered the Cloudflare account's `arknav.workers.dev` subdomain and deployed `arknav-blog-auth` successfully.
+- GitHub OAuth callback URL: `https://arknav-blog-auth.arknav.workers.dev/callback`.
+- Chrome computer access was not approved; GitHub's browser-only OAuth app registration needs user interaction.
+- The website is prepared for publication through the existing `main` branch Pages workflow. Existing Git credentials passed a push dry-run; GitHub CLI sign-in is still pending.
+- A private ignored `.env.blog-auth` file is available locally for the OAuth credentials. Neither credential has been provided or uploaded.
+
+## Known framework limitation outside the current deployment
+
+Testing `PAGES_BASE_PATH=/test-site` exposed a Vinext static-prerender failure (404 responses for dynamic article routes). The current `arknav.github.io` root-domain build does not use a base path and succeeds. Moving to a project repository under `/repository-name` requires addressing that framework limitation first. The existing base-path configuration was preserved.
+
+## Key files
+
+- `app/blog/page.tsx`, `app/blog/[slug]/page.tsx`, `components/blog-shell.tsx`
+- `lib/blog.ts`, `content/posts/_TEMPLATE.md`, `content/posts/*.md`
+- `app/globals.css`, `app/page.tsx`, `app/layout.tsx`
+- `scripts/prepare-pages.mjs`, `package.json`, `package-lock.json`, `README.md`
+- `public/admin/`, `services/blog-auth/`, `BLOG_ADMIN_SETUP.md`

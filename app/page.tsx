@@ -1,3 +1,5 @@
+import { siteUrl } from '@/lib/blog';
+
 const socials = [
   { label: 'Email', detail: 'aketineni3@gatech.edu', href: 'mailto:aketineni3@gatech.edu' },
   { label: 'LinkedIn', detail: 'linkedin.com/in/aketineni', href: 'https://www.linkedin.com/in/aketineni/' },
@@ -29,7 +31,7 @@ export default function Home() {
       <header className="site-header">
         <a className="wordmark" href="#main" aria-label="Arnav Ketineni home">ARK<span aria-hidden="true">.</span></a>
         <nav aria-label="Main navigation">
-          <a href="#about">About</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#resume">Résumé</a><a href="#contact">Contact <span aria-hidden="true">↗</span></a>
+          <a href="#about">About</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#resume">Résumé</a><a href={siteUrl('/blog/')}>Blog</a><a href="#contact">Contact <span aria-hidden="true">↗</span></a>
         </nav>
       </header>
       <main id="main">

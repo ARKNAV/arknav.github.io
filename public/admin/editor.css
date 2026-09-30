@@ -1,0 +1,8 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #172538; background: #f8fafc; }
+body { margin: 0; }
+#editor-status { max-width: 620px; margin: 12vh auto; padding: 32px; border: 1px solid #dce3eb; background: white; border-radius: 16px; }
+.wordmark { font-weight: 800; font-size: 24px; text-decoration: none; }
+.eyebrow { margin-top: 48px; text-transform: uppercase; letter-spacing: .14em; font-size: 12px; }
+h1 { font: 48px/1.1 Georgia, serif; }
+span, a { color: #2563eb; }
+p { line-height: 1.7; }

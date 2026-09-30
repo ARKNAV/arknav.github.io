@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "arknav-blog-auth",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-09-29",
+  "workers_dev": true,
+  "vars": {
+    "SITE_ORIGIN": "https://arknav.github.io",
+    "GITHUB_REPO": "ARKNAV/arknav.github.io",
+    "ALLOWED_LOGIN": "ARKNAV"
+  }
+}

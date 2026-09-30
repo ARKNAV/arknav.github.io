@@ -1,0 +1,50 @@
+backend:
+  name: github
+  repo: ARKNAV/arknav.github.io
+  branch: main
+  # The login service URL is injected from settings.json.
+  auth_scope: public_repo
+
+site_url: https://arknav.github.io
+display_url: https://arknav.github.io/blog/
+logo_url: /favicon.svg
+media_folder: public/blog
+public_folder: /blog
+publish_mode: simple
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: posts
+    label: Blog posts
+    label_singular: Blog post
+    folder: content/posts
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    identifier_field: title
+    summary: '{{title}} · {{date}}'
+    sortable_fields: [date, title]
+    preview_path: 'blog/{{slug}}/'
+    editor:
+      preview: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Date
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - { label: Category, name: category, widget: string, default: Notes }
+      - { label: Excerpt, name: excerpt, widget: text, hint: 'A short introduction shown on the blog listing.' }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: true
+        hint: 'Keep enabled to save without publishing. Disable and save to publish.'
+      - { label: Body, name: body, widget: markdown }
