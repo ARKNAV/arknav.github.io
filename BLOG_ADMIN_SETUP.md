@@ -1,6 +1,6 @@
 # Activate the on-site blog editor
 
-The `/admin/` editor is published at `https://arknav.github.io/admin/`. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. GitHub OAuth credentials are still required to activate login.
+The `/admin/` editor is published at `https://arknav.github.io/admin/`. The login Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev` and the editor is configured to use it. Both GitHub OAuth credentials are installed in Worker secrets, and the login service now redirects to GitHub successfully. Actual account login and publishing still need a final check.
 
 The public website stays on GitHub Pages. A separate Cloudflare Worker handles the GitHub OAuth exchange. It allows only `ARKNAV`, checks write access to `ARKNAV/arknav.github.io`, and uses state cookies and PKCE to verify login. The client secret stays in Worker secrets. The editor saves Markdown and images directly to `main`, which triggers the existing Pages workflow.
 
@@ -24,7 +24,7 @@ In GitHub, open **Settings → Developer settings → OAuth Apps → New OAuth A
 - Application name: `Arnav blog editor`
 - Homepage URL: `https://arknav.github.io`
 - Authorization callback URL: `https://arknav-blog-auth.arknav.workers.dev/callback`
-- Leave wildcard callback matching and device flow disabled.
+- Leave wildcard callback matching, device flow, and **Expire user access tokens** disabled. This integration does not implement token refresh.
 
 Generate a client secret. Add the app's Client ID and client secret using Wrangler's interactive prompts:
 
@@ -53,7 +53,7 @@ Keep `SITE_ORIGIN` in `services/blog-auth/wrangler.jsonc` aligned with the websi
 
 Commit and push the website changes to `main` when ready. The included GitHub Pages workflow publishes `/admin/`. These instructions do not require moving the website to another hosting service.
 
-The initial website publication is already complete. You only need to configure the OAuth credentials to activate login; no new website build is required for Worker secret changes.
+The initial website publication is already complete. The OAuth credentials have also been installed. No new website build is required for Worker secret changes.
 
 ## Write and publish
 
@@ -78,7 +78,7 @@ The editor uses Decap CMS 3.16.3 with a pinned script and integrity check. It us
 - An article saved as a draft is intentionally excluded from the blog. A failed Pages workflow must be fixed before any new save becomes public.
 - Branch protection can prevent direct saves to `main`. This setup assumes the current direct publishing workflow; an approval workflow would need a separate editorial-workflow configuration.
 
-End-to-end login and publishing require the real OAuth app, deployed Worker, and live website. They have not been verified locally.
+The deployed authorization endpoint returns HTTP 302 to GitHub with the exact callback URL and S256 PKCE. The live editor displays **Login with GitHub**. End-to-end account login and publishing have not yet been verified; GitHub browser access is currently blocked by a saved site permission.
 
 ## Official references
 

@@ -29,12 +29,13 @@ Updated September 29, 2026. Target repository: `ARKNAV/arknav.github.io`.
 - After adding the editor: production build and TypeScript checks passed; all five admin assets are included in the static export.
 - Four login-service tests passed, covering configuration failures, state verification, PKCE, authorized login, fixed-origin popup messaging, denied accounts/write access, and GitHub API failures. No real credentials are used by these tests.
 - Worker deployment dry-run passed. Editor configuration, setup messages, CMS initialization, pinned-script integrity, and exported author links were checked. Local `/admin/index.html` returned HTTP 200.
-- Browser opening was unavailable; no screenshot or interactive browser verification was performed.
+- Live editor browser verification reached the **Login with GitHub** button. GitHub browser access remains blocked by a saved site permission, so an actual account login and publishing save remain unverified.
+- Both OAuth credentials were securely uploaded to Cloudflare Worker secrets from the ignored local file. The live `/auth?provider=github` endpoint returns HTTP 302 to GitHub, with the exact callback URL, `public_repo` scope, and S256 PKCE.
 
 ## Remaining user actions
 
 1. Create your own writing; the example posts remain drafts.
-2. Create the GitHub OAuth app and set its two Worker secrets. Follow `BLOG_ADMIN_SETUP.md`. Cloudflare login succeeded, the Worker is deployed at `https://arknav-blog-auth.arknav.workers.dev`, and `public/admin/settings.json` now points to it. Live editor login and publishing remain unverified.
+2. Visit `https://arknav.github.io/admin/`, click **Login with GitHub**, and authorize the app as `ARKNAV`. Confirm the editor opens and save your first post. The OAuth app credentials are installed and the authorization redirect is working; actual login and publishing remain unverified.
 
 ## Deployment progress
 
@@ -42,8 +43,8 @@ Updated September 29, 2026. Target repository: `ARKNAV/arknav.github.io`.
 - GitHub OAuth callback URL: `https://arknav-blog-auth.arknav.workers.dev/callback`.
 - Chrome computer access was not approved; GitHub's browser-only OAuth app registration needs user interaction.
 - The website source was committed as `ca4bd4373d00f25b192f4a74d184345476888b57` and pushed to `main` using the existing Git credentials. GitHub Pages run `36656305423` completed successfully.
-- The blog and editor are published at `https://arknav.github.io/blog/` and `https://arknav.github.io/admin/`. Login remains inactive until the GitHub OAuth app credentials are supplied.
-- A private ignored `.env.blog-auth` file is available locally for the OAuth credentials. Neither credential has been provided or uploaded.
+- The blog and editor are published at `https://arknav.github.io/blog/` and `https://arknav.github.io/admin/`. The OAuth credentials are now installed, and the login service redirects to GitHub successfully.
+- A private ignored `.env.blog-auth` file is available locally for the OAuth credentials. Both credentials have been uploaded to Worker secrets without displaying their values. The file remains excluded from Git.
 
 ## Known framework limitation outside the current deployment
 
