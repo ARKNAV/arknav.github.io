@@ -60,8 +60,8 @@ The initial website publication is already complete. The OAuth credentials have 
 1. Visit `https://arknav.github.io/admin/`, or click **Write a post** on the blog.
 2. Click **Login with GitHub** and authorize your OAuth app as `ARKNAV`.
 3. Open **Blog posts → New Blog post**. Fill in the title, date, excerpt, category, tags, and body. Use the Markdown editor's image control to upload images.
-4. Keep **Draft** enabled and click the editor's save/publish control to save work in GitHub without including it on the public blog. This draft is still readable in the public GitHub repository.
-5. Disable **Draft** and save when ready to publish. The editor commits to `main`; wait for **Actions → Deploy to GitHub Pages** to finish, then check the blog.
+4. Leave **Hide from public blog (draft)** off (the default), then click **Publish** to publish your post. The editor commits to `main`; wait for **Actions → Deploy to GitHub Pages** to finish, then refresh the blog.
+5. To save unfinished work, turn **Hide from public blog (draft)** on before saving. This excludes the post from the website even if the editor's button says **Publish**. Turn it off and save again when ready to publish. Drafts are still readable in the public GitHub repository.
 
 Existing posts can be edited in the collection or with **Edit this post** on an article. The `_TEMPLATE.md` entry may appear in the editor; leave it alone and create a new entry for your writing. Renaming a title does not automatically rename the existing post's URL. Dates do not schedule publication.
 

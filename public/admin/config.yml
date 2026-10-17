@@ -42,9 +42,9 @@ collections:
       - { label: Category, name: category, widget: string, default: Notes }
       - { label: Excerpt, name: excerpt, widget: text, hint: 'A short introduction shown on the blog listing.' }
       - { label: Tags, name: tags, widget: list, required: false }
-      - label: Draft
+      - label: Hide from public blog (draft)
         name: draft
         widget: boolean
-        default: true
-        hint: 'Keep enabled to save without publishing. Disable and save to publish.'
+        default: false
+        hint: 'Leave off to publish. Turn on to hide this post, even after clicking Publish. Drafts are still visible in the public GitHub repository.'
       - { label: Body, name: body, widget: markdown }
