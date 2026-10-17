@@ -1,5 +1,5 @@
 ---
-title: New blog?
+title: New Blogs
 date: 2026-10-17
 category: Introduction
 excerpt: "Just introducing my blog here. "
